@@ -17,14 +17,13 @@ const reqDate = {
   required: true,
 };
 
-const itemSchema = new Schema({
-  name: reqStr,
-  desc: reqStr,
-  company: reqStr,
-  purchase: reqNum,
-  sale: reqNum,
-  qty: reqNum,
-  addeddate: reqDate,
+const TransactionSchema = new Schema({
+  user_id: reqStr,
+  date: reqDate,
+  depositor: reqStr,
+  accountno: reqNum,
+  cnicno: reqNum,
+  amount: reqNum,
 });
 
-module.exports = mongoose.model("Item", itemSchema);
+module.exports = mongoose.model("Transactions", TransactionSchema);

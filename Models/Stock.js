@@ -17,14 +17,14 @@ const reqDate = {
   required: true,
 };
 
-const itemSchema = new Schema({
+const stockSchema = new Schema({
+  company_id: reqStr,
   name: reqStr,
-  desc: reqStr,
-  company: reqStr,
-  purchase: reqNum,
-  sale: reqNum,
   qty: reqNum,
-  addeddate: reqDate,
+  desc: reqStr,
+  invoice: reqStr,
+  truck: reqStr,
+  date: reqDate,
 });
 
-module.exports = mongoose.model("Item", itemSchema);
+module.exports = mongoose.model("Stock", stockSchema);
