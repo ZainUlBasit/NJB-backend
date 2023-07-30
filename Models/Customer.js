@@ -21,6 +21,7 @@ const CustomerSchema = new Schema({
   remaining: reqNum,
   paid: reqNum,
   discount: reqNum,
+  advance: reqNum,
 });
 
 module.exports = mongoose.model("Customer", CustomerSchema);

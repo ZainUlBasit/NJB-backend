@@ -13,6 +13,7 @@ const AddCustomer = async (req, res, next) => {
       remaining: 0,
       paid: 0,
       discount: 0,
+      advance: 0,
     });
     await customer.save();
   } catch (err) {
@@ -85,12 +86,21 @@ const UpdateCustomer = async (req, res, next) => {
 
 const UpdateCustomerTotal = async (req, res, next) => {
   const customerId = req.params.id;
-  const { total, discount } = req.body;
+  let { total, discount, advance, paid } = req.body;
+  advance = advance * -1;
+  let rem = total - paid;
   let customer;
   try {
     customer = await Customer.findOneAndUpdate(
       { _id: customerId },
-      { $inc: { total: total, remaining: total, discount: discount } },
+      {
+        $inc: {
+          total: total,
+          remaining: rem,
+          discount: discount,
+          advance: advance,
+        },
+      },
       { new: true },
       (err, data) => {
         if (data === null) {
@@ -130,9 +140,32 @@ const UpdateCustomerAccounts = async (req, res, next) => {
   }
 };
 
+const UpdateCustomerAdvance = async (req, res, next) => {
+  const { id, amount } = req.body;
+  console.log(req.body);
+  let customer;
+  try {
+    customer = await Customer.findOneAndUpdate(
+      { _id: id },
+      { $inc: { advance: amount } },
+      { new: true },
+      (err, data) => {
+        if (data === null) {
+          return res.status(404).json({ message: "Customer not found" });
+        } else {
+          return res.status(200).json({ customer });
+        }
+      }
+    );
+  } catch (err) {
+    console.log("Error Occured", err.message);
+  }
+};
+
 exports.AddCustomer = AddCustomer;
 exports.GetAllCustomers = GetAllCustomers;
 exports.DeleteCustomer = DeleteCustomer;
 exports.UpdateCustomer = UpdateCustomer;
+exports.UpdateCustomerAdvance = UpdateCustomerAdvance;
 exports.UpdateCustomerTotal = UpdateCustomerTotal;
 exports.UpdateCustomerAccounts = UpdateCustomerAccounts;

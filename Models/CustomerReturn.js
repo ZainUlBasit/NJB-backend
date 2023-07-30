@@ -17,7 +17,7 @@ const reqDate = {
   required: true,
 };
 
-const CustomerTransactionSchema = new Schema({
+const CustomerReturnSchema = new Schema({
   customerid: reqStr,
   desc: reqStr,
   name: reqStr,
@@ -30,6 +30,6 @@ const CustomerTransactionSchema = new Schema({
 });
 
 module.exports = mongoose.model(
-  "CustomerTransaction",
-  CustomerTransactionSchema
+  "CustomerReturn",
+  CustomerReturnSchema
 );

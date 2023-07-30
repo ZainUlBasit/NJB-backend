@@ -8,6 +8,15 @@ const CustomerTransactionController = require("../Controllers/CustomerTransactio
 const BillController = require("../Controllers/BillController");
 const ExpenseController = require("../Controllers/ExpenseController");
 const TransactionController = require("../Controllers/TransactionController");
+const ReturnController = require("../Controllers/CustomerReturnController");
+const AuthController = require("../Controllers/authControllers");
+const LogOutController = require("../Controllers/LogoutController");
+
+// Auth Routes
+router.post("/sign-up", AuthController().register);
+router.post("/sign-in", AuthController().login);
+router.post("/sign-out", LogOutController.Logout);
+router.get("/refresh", AuthController().autoLogin);
 
 // Company
 router.post("/add_company", CompanyController.AddCompany);
@@ -42,6 +51,10 @@ router.put(
   "/update-customer-accounts/:id",
   CustomerController.UpdateCustomerAccounts
 );
+router.patch(
+  "/update-customer-advance",
+  CustomerController.UpdateCustomerAdvance
+);
 
 // Transactions
 router.post(
@@ -52,6 +65,17 @@ router.post(
   "/get-customer-transaction",
   CustomerTransactionController.GetTransaction
 );
+router.post(
+  "/get-all-customer-transaction",
+  CustomerTransactionController.GetAllTransaction
+);
+
+// ********************************************
+// Customer Return Items
+// ********************************************
+router.post("/add-customer-return", ReturnController.AddTransaction);
+router.post("/get-customer-return", ReturnController.GetTransaction);
+router.post("/get-all-customer-return", ReturnController.GetAllTransaction);
 
 // bill
 router.put("/update-bill-no", BillController.updateBillNo);
