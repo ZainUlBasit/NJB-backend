@@ -1,7 +1,8 @@
 const Stock = require("../Models/Stock");
 
 const AddStock = async (req, res, next) => {
-  let { company_id, name, qty, desc, invoice, truck, date } = req.body;
+  let { company_id, name, purchase, qty, desc, invoice, truck, date } =
+    req.body;
   let stock;
   date = new Date(date);
   try {
@@ -10,6 +11,7 @@ const AddStock = async (req, res, next) => {
       name,
       qty,
       desc,
+      purchase,
       invoice,
       truck,
       date,

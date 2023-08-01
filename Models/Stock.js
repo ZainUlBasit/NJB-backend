@@ -20,6 +20,7 @@ const reqDate = {
 const stockSchema = new Schema({
   company_id: reqStr,
   name: reqStr,
+  purchase: reqNum,
   qty: reqNum,
   desc: reqStr,
   invoice: reqStr,

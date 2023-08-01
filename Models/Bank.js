@@ -7,9 +7,15 @@ const reqStr = {
   required: true,
 };
 
+const reqNum = {
+  type: Number,
+  required: true,
+};
+
 const BankSchema = new Schema({
   bankname: reqStr,
   accountno: reqStr,
+  amount: reqNum,
 });
 
 module.exports = mongoose.model("Bank", BankSchema);

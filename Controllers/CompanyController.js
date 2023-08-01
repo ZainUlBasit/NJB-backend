@@ -108,7 +108,7 @@ const UpdateCompanyAccounts = async (req, res, next) => {
       { new: true },
       (err, data) => {
         if (err) {
-          console.log("Error: ",err.message);
+          console.log("Error: ", err.message);
         }
         if (data === null) {
           return res.status(404).json({ message: "Company not found" });
@@ -126,17 +126,15 @@ const ItemLedger = async (req, res, next) => {
   const { id, fromdate, todate } = req.body;
   const startDate = new Date(fromdate);
   const endDate = new Date(todate);
-  console.log(req.body);
   let companyCashLedger;
   try {
     companyCashLedger = await Stock.find({
-      companyid: id,
+      company_id: id,
       date: {
         $gte: startDate,
         $lte: endDate,
       },
     });
-    console.log(companyCashLedger);
   } catch (err) {
     console.log(err);
   }

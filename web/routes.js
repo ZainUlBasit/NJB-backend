@@ -11,6 +11,7 @@ const TransactionController = require("../Controllers/TransactionController");
 const ReturnController = require("../Controllers/CustomerReturnController");
 const AuthController = require("../Controllers/authControllers");
 const LogOutController = require("../Controllers/LogoutController");
+const BankController = require("../Controllers/BankController");
 
 // Auth Routes
 router.post("/sign-up", AuthController().register);
@@ -89,4 +90,14 @@ router.post("/get-expenses", ExpenseController.GetExpense);
 router.post("/add-transaction", TransactionController.AddTransaction);
 router.post("/get-transaction", TransactionController.GetTransactions);
 // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+// ***********************************
+// Bank Accounts Routes
+// ***********************************
+router.post("/add-bank-account", BankController.AddBankAccount);
+router.get("/get-bank-accounts", BankController.GetBankAccounts);
+router.patch("/update-bank-amount", BankController.UpdateAmount)
+// xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+// xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
 module.exports = router;

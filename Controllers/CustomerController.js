@@ -99,6 +99,7 @@ const UpdateCustomerTotal = async (req, res, next) => {
           remaining: rem,
           discount: discount,
           advance: advance,
+          paid: paid,
         },
       },
       { new: true },

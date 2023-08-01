@@ -21,7 +21,10 @@ const itemSchema = new Schema({
   name: reqStr,
   desc: reqStr,
   company: reqStr,
+  //without expense
   purchase: reqNum,
+  //with expense
+  purchasee: reqNum,
   sale: reqNum,
   qty: reqNum,
   addeddate: reqDate,

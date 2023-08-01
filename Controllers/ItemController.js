@@ -3,13 +3,14 @@ const Item = require("../Models/Item");
 
 const AddItem = async (req, res, next) => {
   let item;
-  const { name, desc, company, purchase, sale } = req.body;
+  const { name, desc, company, purchasee, purchase, sale } = req.body;
   try {
     item = new Item({
       name,
       desc,
       company,
       purchase,
+      purchasee,
       sale,
       qty: 0,
       addeddate: new Date(),
@@ -41,7 +42,7 @@ const GetAllItems = async (req, res, next) => {
 
 const UpdateItem = async (req, res, next) => {
   const itemId = req.params.id;
-  const { name, desc, company, purchase, sale } = req.body;
+  const { name, desc, company, purchasee, purchase, sale } = req.body;
   let item;
   try {
     item = await Item.findOneAndUpdate(
@@ -52,6 +53,7 @@ const UpdateItem = async (req, res, next) => {
           desc,
           company,
           purchase,
+          purchasee,
           sale,
         },
       },
