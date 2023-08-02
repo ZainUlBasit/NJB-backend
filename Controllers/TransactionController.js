@@ -1,17 +1,20 @@
 const Transactions = require("../Models/Transactions");
 
 const AddTransaction = async (req, res, next) => {
-  let { user_id, date, depositor, accountno, cnicno, amount } = req.body;
+  let { user_id, bank, accountno, amount, depositor, date, cnicno, contact } =
+    req.body;
   date = new Date(date);
   let transaction;
   try {
     transaction = new Transactions({
       user_id,
-      date,
-      depositor,
+      bank,
       accountno,
-      cnicno,
       amount,
+      depositor,
+      date,
+      cnicno,
+      contact,
     });
     await transaction.save();
     console.log(transaction);

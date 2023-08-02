@@ -19,11 +19,13 @@ const reqDate = {
 
 const TransactionSchema = new Schema({
   user_id: reqStr,
-  date: reqDate,
-  depositor: reqStr,
+  bank: reqStr,
   accountno: reqNum,
-  cnicno: reqNum,
   amount: reqNum,
+  depositor: reqStr,
+  date: reqDate,
+  cnicno: reqNum,
+  contact: reqStr,
 });
 
 module.exports = mongoose.model("Transactions", TransactionSchema);

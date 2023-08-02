@@ -1,7 +1,7 @@
 const Customer = require("../Models/Customer");
 
 const AddCustomer = async (req, res, next) => {
-  const { name, contact, address, cnic } = req.body;
+  const { name, contact, address, cnic, type } = req.body;
   let customer;
   try {
     customer = new Customer({
@@ -9,6 +9,7 @@ const AddCustomer = async (req, res, next) => {
       contact,
       cnic,
       address,
+      type,
       total: 0,
       remaining: 0,
       paid: 0,

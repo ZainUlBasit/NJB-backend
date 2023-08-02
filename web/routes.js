@@ -12,6 +12,8 @@ const ReturnController = require("../Controllers/CustomerReturnController");
 const AuthController = require("../Controllers/authControllers");
 const LogOutController = require("../Controllers/LogoutController");
 const BankController = require("../Controllers/BankController");
+const User = require("../Models/User");
+const bcrypt = require("bcrypt");
 
 // Auth Routes
 router.post("/sign-up", AuthController().register);
@@ -96,8 +98,60 @@ router.post("/get-transaction", TransactionController.GetTransactions);
 // ***********************************
 router.post("/add-bank-account", BankController.AddBankAccount);
 router.get("/get-bank-accounts", BankController.GetBankAccounts);
-router.patch("/update-bank-amount", BankController.UpdateAmount)
+router.patch("/update-bank-amount", BankController.UpdateAmount);
 // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+router.put("/change-password", async (req, res) => {
+  console.log(req.body);
+  try {
+    const { customerId, currentPassword, newPassword } = req.body;
+
+    // Perform any necessary validation checks on the input data
+    if (!currentPassword || !newPassword) {
+      return res
+        .status(400)
+        .json({ message: "Current password and new password are required." });
+    }
+
+    // Check if the current password matches the stored hashed password for the user
+    // Replace this with your own logic to retrieve the user's hashed password from the database
+    const user = await User.find({ _id: customerId });
+    const storedHashedPassword = user[0].password; // Retrieve the user's hashed password from the database
+    console.log(storedHashedPassword);
+    const isMatch = await bcrypt.compare(currentPassword, storedHashedPassword);
+    if (!isMatch) {
+      return res.status(401).json({ message: "Invalid current password." });
+    }
+
+    // Hash the new password before saving it to the database
+    const saltRounds = 10; // You can adjust this value as needed for security
+    const hashedPassword = await bcrypt.hash(newPassword, saltRounds);
+
+    // Save the hashedPassword to the database for the user
+    // Replace this with your own logic to update the user's password in the database
+    let userWithNewPassword;
+    userWithNewPassword = await User.findByIdAndUpdate(
+      { _id: customerId },
+      {
+        $set: {
+          password: hashedPassword,
+        },
+      },
+      { new: true },
+      (err, data) => {
+        if (data === null) {
+          return res.status(404).json({ message: "Customer not found" });
+        } else {
+          return res.status(200).json({ userWithNewPassword });
+        }
+      }
+    );
+    return res.status(200).json({ message: "Password changed successfully." });
+  } catch (error) {
+    console.error("Error changing password:", error.message);
+    return res.status(500).json({ message: "Internal server error." });
+  }
+});
 
 module.exports = router;
