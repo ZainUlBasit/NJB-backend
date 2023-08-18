@@ -17,16 +17,15 @@ const reqDate = {
   required: true,
 };
 
-const TransactionSchema = new Schema({
-  user_id: reqStr,
-  bank: reqStr,
-  accountno: reqNum,
-  amount: reqNum,
-  depositor: reqStr,
+const ChargesSchema = new Schema({
+  bill_id: reqNum,
+  paid: reqNum,
+  total: reqNum,
+  advance: reqNum,
+  loading_charges: reqNum,
+  delivery_charges: reqNum,
+  discount: reqNum,
   date: reqDate,
-  cnicno: reqNum,
-  contact: reqStr,
-  type: reqStr,
 });
 
-module.exports = mongoose.model("Transactions", TransactionSchema);
+module.exports = mongoose.model("Charges", ChargesSchema);

@@ -12,10 +12,12 @@ const ReturnController = require("../Controllers/CustomerReturnController");
 const AuthController = require("../Controllers/authControllers");
 const LogOutController = require("../Controllers/LogoutController");
 const BankController = require("../Controllers/BankController");
+const ChargesController = require("../Controllers/ChargesController")
 const User = require("../Models/User");
 const bcrypt = require("bcrypt");
 
 // Auth Routes
+router.post("/sign-up", AuthController().register);
 router.post("/sign-up", AuthController().register);
 router.post("/sign-in", AuthController().login);
 router.post("/sign-out", LogOutController.Logout);
@@ -69,9 +71,18 @@ router.post(
   CustomerTransactionController.GetTransaction
 );
 router.post(
+  "/get-all-customer-by-date-transaction",
+  CustomerTransactionController.GetAllTransactionByDate
+);
+router.post(
   "/get-all-customer-transaction",
   CustomerTransactionController.GetAllTransaction
 );
+router.delete("/delete-invoice/:id", CustomerTransactionController.DeleteInvoice);
+// Charges
+router.post("/add-charges", ChargesController.AddCharges)
+router.get("/get-charges/:id", ChargesController.GetCharges)
+
 
 // ********************************************
 // Customer Return Items
@@ -91,6 +102,7 @@ router.post("/get-expenses", ExpenseController.GetExpense);
 // ===============================================
 router.post("/add-transaction", TransactionController.AddTransaction);
 router.post("/get-transaction", TransactionController.GetTransactions);
+router.post("/get-all-transaction", TransactionController.GetAllTransactions);
 // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 // ***********************************
